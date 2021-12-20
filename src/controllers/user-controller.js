@@ -117,10 +117,32 @@ async function deleteUser(req, res, next) {
   }
 }
 
+async function signUp(req, res, next) {
+  const { uid, email } = req.user;
+
+  try {
+    const user = await db.User.findOne({ email: email });
+
+    if (user) {
+      return res.sendStatus(200);
+    }
+
+    await db.User.create({
+      _id: uid,
+      email: email,
+    });
+
+    res.sendStatus(201);
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getUsers: getUsers,
   getUserDetails: getUserDetails,
   createUser: createUser,
   updateUser: updateUser,
   deleteUser: deleteUser,
+  signUp: signUp,
 };

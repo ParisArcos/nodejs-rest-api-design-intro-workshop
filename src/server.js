@@ -19,7 +19,7 @@ app.use(
   }),
 );
 
+app.use(userRouter);
 app.use(bookRouter);
-app.use("/user", userRouter);
 
 module.exports = app;
